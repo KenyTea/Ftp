@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ftp.lib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,7 +17,8 @@ namespace Ftp
             ServiceFtp sftp = new ServiceFtp(
                 new NetworkCredential("AvisSite", "dm#o4%v#Wn43arWv2"), "ftp://new.avislogistics.kz:2021/GOODS_RECEIPT/");
 
-            sftp.DownloadFile();
+            //sftp.DownloadFile();
+            GoodsReceipt g = sftp.DF("new_GOODS_RECEIPT_20180313-200655-249.xml");
         }
     }
 }
