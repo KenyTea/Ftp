@@ -30,6 +30,7 @@ namespace Ftp
             var responce = (FtpWebResponse)request.GetResponse();
             Stream stream = responce.GetResponseStream();
 
+            List<string> ListFiles = new List<string>();
             if (stream != null)
             {
                 using (var reader = new StreamReader(stream))
@@ -37,11 +38,19 @@ namespace Ftp
                     var line = reader.ReadLine();
                     while (!string.IsNullOrEmpty(line))
                     {
-                        Console.WriteLine(line);
+                        ListFiles.Add(line);
                         line = reader.ReadLine();
                     }
                 }
+                using (var ftpClients = new WebClient() { Credentials = credential })
+                {
+                    foreach (var item in ListFiles)
+                    {
+                        ftpClients.DownloadFile(path + "/" + item, "new_" + item);
+                    }
+                }
             }
+
         }
 
     }
